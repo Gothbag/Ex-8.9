@@ -39,6 +39,7 @@ public class CarSuperTool {
 			System.out.println(c);	
 		}
 		
+		System.out.println("CARS SORTED BY MAKE, AGAIN");
 		TreeMap<String, ArrayList<Car>> carsSortedByMake = CarSuperToolCore.carsGroupedByMakeTrue(carMap);
 		
 		for(Iterator<Map.Entry<String, ArrayList<Car>>> it = carsSortedByMake.entrySet().iterator(); it.hasNext(); ) {
