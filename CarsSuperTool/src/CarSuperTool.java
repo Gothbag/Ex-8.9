@@ -38,7 +38,16 @@ public class CarSuperTool {
 		for (Car c : cars2000cc) {
 			System.out.println(c);	
 		}
-		CarSuperToolCore.deleteCarsGT2500cc(carMap);
+		
+		TreeMap<String, ArrayList<Car>> carsSortedByMake = CarSuperToolCore.carsGroupedByMakeTrue(carMap);
+		
+		for(Iterator<Map.Entry<String, ArrayList<Car>>> it = carsSortedByMake.entrySet().iterator(); it.hasNext(); ) {
+			Map.Entry<String, ArrayList<Car>> entry = it.next();
+			for (Car c : entry.getValue()) {
+				System.out.println(c);
+			}
+	    	//System.out.println(entry.getKey() + " " + entry.getValue().toString());
+	    }
 		
 		System.out.println("WE REMOVE ALL CARS WITH AN ENGINE DISPLACEMENT GREATER THAN 2500");
 		CarSuperToolCore.deleteCarsGT2500cc(carMap);
@@ -103,6 +112,26 @@ public class CarSuperTool {
 		    });
 			return groupedCars;
 			
+		}
+		
+		public static TreeMap<String,ArrayList<Car>> carsGroupedByMakeTrue(Map<String, Car> pCarMap) {
+			//declarations
+			TreeMap<String,ArrayList<Car>> groupedCars = new TreeMap<String,ArrayList<Car>>();
+			//we iterate over the map
+			for(Map.Entry<String,Car> entry : pCarMap.entrySet()) {
+				//if the map of cars sorted by make doesn't contain a make, we add it 
+				if ( !groupedCars.containsKey(entry.getValue().getMake()) ) {
+					groupedCars.put(entry.getValue().getMake(), new ArrayList<Car>());
+					
+				}
+				//groupedCars.
+				for (Map.Entry<String, ArrayList<Car>> entryMakes : groupedCars.entrySet()) {
+					if ( entryMakes.getKey().equals(entry.getValue().getMake()) ) {
+						entryMakes.getValue().add(entry.getValue());
+					}
+			    }
+			}
+			return groupedCars;
 		}
 		
 		//Indeed, maps look very appropriate for indexing our allergens
